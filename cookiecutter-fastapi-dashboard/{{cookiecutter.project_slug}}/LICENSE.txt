@@ -1,0 +1,6 @@
+IMPORTANT:
+This software is supplied to you by {{ cookiecutter.company_name }}.
+Any person who copy or redistribute this software
+outside {{ cookiecutter.company_name }} or attempts to do so could be
+sued for intellectual property theft and corporate
+rules violation.

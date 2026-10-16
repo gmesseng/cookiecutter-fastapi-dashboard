@@ -1,0 +1,38 @@
+name: {{ cookiecutter.project_slug }}
+
+# PostgreSQL n'est pas fourni ici : le projet pointe vers un serveur existant
+# (cf. .env -> {{ cookiecutter.env_prefix }}SOURCE_POSTGRES_URI / {{ cookiecutter.env_prefix }}DEST_POSTGRES_URI). Docker Compose gère
+# Redis et, à la demande (profil "docs"), le serveur de documentation.
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: {{ cookiecutter.__project_snake }}_redis
+    restart: unless-stopped
+    ports:
+      - "${{ '{' }}{{ cookiecutter.env_prefix }}REDIS_HOST_PORT:-{{ cookiecutter.redis_host_port }}{{ '}' }}:6379"
+    volumes:
+      - {{ cookiecutter.__project_snake }}_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Documentation MkDocs (docs/) — non démarrée par défaut :
+  #   docker compose --profile docs up docs
+  docs:
+    image: python:{{ cookiecutter.python_version }}-slim
+    container_name: {{ cookiecutter.__project_snake }}_docs
+    profiles: ["docs"]
+    working_dir: /project
+    volumes:
+      - .:/project:cached
+    ports:
+      - "${{ '{' }}{{ cookiecutter.env_prefix }}DOCS_PORT:-{{ cookiecutter.docs_port }}{{ '}' }}:8000"
+    command: >
+      sh -c "pip install --no-cache-dir --quiet -r requirements-docs.txt
+      && mkdocs serve -f docs/mkdocs.yml --dev-addr 0.0.0.0:8000"
+
+volumes:
+  {{ cookiecutter.__project_snake }}_redis_data:

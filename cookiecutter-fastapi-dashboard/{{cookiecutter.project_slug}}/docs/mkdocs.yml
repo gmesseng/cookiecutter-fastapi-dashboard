@@ -1,0 +1,120 @@
+site_name: {{ cookiecutter.project_name }} — Documentation
+site_description: {{ cookiecutter.description }}
+site_author: {{ cookiecutter.author_name }}
+copyright: Copyright &copy; {% now 'local', '%Y' %} {{ cookiecutter.company_name }}
+{%- if cookiecutter.ci_tool == "GitHub" %}
+repo_url: https://github.com/{{ cookiecutter.github_owner }}/{{ cookiecutter.project_slug }}
+repo_name: {{ cookiecutter.github_owner }}/{{ cookiecutter.project_slug }}
+edit_uri: edit/develop/docs/docs/
+{%- endif %}
+
+# Pages Markdown : docs/docs/ — site généré : docs/site/ (ignoré par git)
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  language: fr
+  font:
+    text: Lato
+    code: JetBrains Mono
+  icon:
+    logo: material/view-dashboard
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: red
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Passer en mode sombre
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: red
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Passer en mode clair
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - content.code.copy
+
+extra:
+  version: {{ cookiecutter.version }}
+
+nav:
+  - Présentation: index.md
+  - Installation et lancement: setup.md
+  - Configuration: configuration.md
+  - Structure du projet: structure.md
+  - Utiliser l'API: api.md
+  - Ajouter un cadran KPI: kpi.md
+{%- if cookiecutter.include_etl == "y" %}
+  - ETL et data mart: etl.md
+{%- endif %}
+  - Référence du code:
+    - Cœur (core): reference/core.md
+    - API: reference/api.md
+    - Schémas: reference/schemas.md
+    - Services: reference/services.md
+  - Dépannage: troubleshooting.md
+  - Contribuer: contributing.md
+  - Changelog: changelog.md
+  - À propos: about.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      # Racine du projet, que mkdocs soit lancé depuis la racine ou depuis docs/
+      base_path: [".", ".."]
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+plugins:
+  - search:
+      lang: fr
+  - autorefs
+  - mkdocstrings:
+      handlers:
+        python:
+          # Racine du projet (relatif à ce fichier) : rend le package `app` importable
+          paths: [..]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_symbol_type_heading: true
+            members_order: source
+            separate_signature: true
+            filters: ["!^_"]

@@ -1,0 +1,5 @@
+# ── Documentation (docs/mkdocs.yml) ─────────────────────────────────────────
+mkdocs==1.6.1                 # https://github.com/mkdocs/mkdocs
+mkdocs-material==9.6.14       # https://github.com/squidfunk/mkdocs-material
+mkdocstrings==0.29.1          # https://github.com/mkdocstrings/mkdocstrings
+mkdocstrings-python==1.16.10  # https://github.com/mkdocstrings/python

@@ -1,0 +1,24 @@
+{
+  "project_name": "Kaeyros BI analytics Project",
+  "project_slug": "{{ cookiecutter.project_name.lower()|replace(' ', '-')|replace('_', '-')|replace('.', '-')|trim() }}",
+  "description": "API FastAPI de dashboard et KPI, en lecture seule sur une base analytique",
+  "company_name": "Kaeyros Analytics",
+  "author_name": "Kaeyros Analytics",
+  "email": "contact@kaeyros-analytics.com",
+  "version": "1.0.0",
+  "env_prefix": "{{ cookiecutter.project_name.split()|map('first')|join|upper }}_",
+  "python_version": "3.11",
+  "api_port": "8000",
+  "redis_host_port": "6380",
+  "docs_port": "9000",
+  "analytics_schema": "analytics",
+  "include_etl": "y",
+  "ci_tool": [
+    "GitHub",
+    "None"
+  ],
+  "github_owner": "kaeyros-analytics-org",
+  "init_git": "y",
+  "debug": "y",
+  "__project_snake": "{{ cookiecutter.project_slug|replace('-', '_') }}"
+}

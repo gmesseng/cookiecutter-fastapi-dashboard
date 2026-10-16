@@ -1,0 +1,34 @@
+# Secrets — le .env est injecté via variables d'environnement Docker/K8s, jamais copié dans l'image
+.env
+.env.*
+!.env.example
+
+# Ignore IDE configuration files
+.vscode/
+.idea/
+.editorconfig
+.gitattributes
+.github
+.gitignore
+.pre-commit-config.yaml
+.venv
+venv
+
+# Ignore temporary and build files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.log
+.git/
+.pytest_cache/
+
+# Ignore test files
+tests/
+
+# Documentation (servie à part, cf. docker-compose profil "docs")
+docs/
+requirements-docs.txt
