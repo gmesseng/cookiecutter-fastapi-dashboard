@@ -36,7 +36,7 @@ cookiecutter path/to/cookiecutter-fastapi-dashboard
 or straight from the repository:
 
 ```bash
-cookiecutter <repository-url>
+cookiecutter <repository-url> --directory cookiecutter-fastapi-dashboard
 ```
 
 Cookiecutter asks one question per variable and shows the default in parentheses; press **Enter** to accept it.
